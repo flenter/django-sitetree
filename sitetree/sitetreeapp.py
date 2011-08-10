@@ -173,7 +173,13 @@ class SiteTree(object):
             # those from template.
             view_arguments = tag_arguments + view_arguments
             view_arguments = [str(view_argument) for view_argument in view_arguments]
-            view_arguments = ' '.join(view_arguments).strip()
+            new_arguments = []
+            for arg in view_arguments:
+                if "-" in arg or "+":
+                    arg = '"' + arg + '"'
+                new_arguments.append(arg)
+
+            view_arguments = ' '.join(new_arguments).strip()
             view_path = view_path[0]
             url_pattern = u'%s %s' % (view_path, view_arguments)
         else:
